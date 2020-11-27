@@ -1,0 +1,137 @@
+OEM 13c
+--------
+OMS--oracle management service
+OMR--oracle management repository--db.
+OMA--oracle mannagement agent---db agent
+OMC oracle management console---login
+
+
+
+steps:
+1. oracle db
+2. oem
+3. agents
+
+
+Q. 3 types OEM setup.
+1. install OEM in one server.- simple
+2. vm 1- omr db
+   vm2- oms and omc
+   vm3 -OMA
+3. install OMR in RAC- node1 and node2
+   omc & oms 
+
+4. OEM compatibility
+
+Quick assignment for all of you. As you all know that OMR (Oracle Management Repository) is your normal Oracle database, you need to find out version compatibility.
+
+For each of the OEM versions below, find out which version of Oracle database is supported as OMR:
+
+OEM 13.4
+OEM 13.3
+OEM 13.2
+OEM 13.1
+OEM 12.1.0.5
+OEM 12.1.0.4
+OEM 12.1.0.1
+
+Example: OEM 13.1 supports Oracle database 12.1.0.2 version as OMR.
+
+
+5. system requiurement --support.dbagenesiz.com
+
+1. virturalbox latest 6.6 version
+2. Oracle linux 7.7 -os
+3. oracle em cloud control 13cr3
+4. oracle database 12cr2
+5. minimum 10g RAM
+
+
+
+stoping oem cloud 
+-------------------
+$OMS_HOME/bin/emctl stop oms -all
+$AGENT_HOME/bin/emctl stop agent
+
+lsnrctl stop 
+sqlplus / as sysdba
+shu immediate;
+
+starting OEM cloud
+------------------
+
+start listener 
+start db
+$OMS_HOME/bin/emctl start oms -all
+$AGENT_HOME/bin/emctl start agent
+
+
+-- check BI publisher status
+
+$OMS_HOME/bin/emctl status oms
+-- disable BI publisher
+$OMS_HOME/bin/emctl config oms -disable_bip
+-- enable BI publisher
+$OMS_HOME/bin/emctl config oms -enable_bip
+
+monitoring db from oem
+----------------------
+all target ---
+
+ setup--add target manually
+ add using guided process
+
+
+1. select oracle database, listener and automatic storage management
+2. specify hostname
+3. ask dbsnmp password- oracle test connection or unlock the dbsnmp
+   or change password
+4. click on save.
+
+same router/network
+
+OEM-192.168.1.171 --linux  oem
+OEM-192.168.1.172 -- windows dev
+dns server 8.8.8.8 default
+
+
+add oms entry to both of the server.
+
+
+
+setting bash profile
+
+.bash_profile
+
+# .bash_profile
+
+# Get the aliases and functions
+if [-f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+#user specific environment and startup programs
+
+export ORACLE_HOME=/u01/app/oracle/product/12.2.0.1
+export ORACLE_SID=devdb
+export AGENT_HOME=/u01/app/oracle/agent/agent_inst
+PATH=$PATH:$HOME/.local/bin:$ORACLE_HOME/bin
+export PATH
+
+
+TEST
+env|grep ora
+env|grep AGENT
+
+
+
+
+
+
+
+
+
+
+
+
+
